@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProspectX Pro — Vrais Prospects France</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* --- TON STYLE EXISTANT (CONSERVÉ) --- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f6f2; --white:#fff; --ink:#111; --ink2:#444; --ink3:#888;
+  --border:#e3e0d8; --accent:#1a56ff; --alight:#eef1ff; --aborder:#c7d2ff;
+  --green:#16a34a; --glight:#dcfce7; --red:#dc2626; --rlight:#fee2e2;
+  --orange:#d97706; --olight:#fef3c7; --blue:#1d4ed8; --blight:#dbeafe;
+  --shadow:0 1px 4px rgba(0,0,0,.07),0 2px 12px rgba(0,0,0,.06);
+  --r:10px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55}
+.app{max-width:1000px;margin:0 auto;padding:28px 18px 80px}
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.logo{display:flex;align-items:center;gap:11px}
+.logo-sq{width:38px;height:38px;background:var(--accent);border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px}
+.logo-name{font-size:19px;font-weight:700}.logo-name b{color:var(--accent)}
+.badge-hdr{font-family:'DM Mono',monospace;font-size:11px;background:var(--alight);color:var(--accent);border:1px solid var(--aborder);padding:3px 10px;border-radius:20px}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.section-title{font-size:12px;font-family:'DM Mono',monospace;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.9px;margin-bottom:18px}
+.row2,.row3{display:grid;gap:14px;margin-bottom:14px}
+.row2{grid-template-columns:1fr 1fr}.row3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:580px){.row2,.row3{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12px;font-weight:600;color:var(--ink2)}
+input,select{font-family:'DM Sans',sans-serif;font-size:14px;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:9px 13px;outline:none;width:100%}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap}
+.btn{padding:10px 22px;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:6px;transition:0.2s}
+.btn-p{background:var(--accent);color:#fff}.btn-o{background:#fff;border:1px solid var(--border)}
+.btn-g{background:var(--green);color:#fff}
+.prog-card{display:none}.prog-card.on{display:block}
+.prog-track{height:5px;background:var(--bg);border-radius:3px;margin-bottom:14px;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);width:0%;transition:width .3s}
+.logbox{background:var(--ink);color:#00ff00;border-radius:7px;padding:10px;font-family:'DM Mono',monospace;font-size:11px;max-height:120px;overflow-y:auto}
+.stats{display:grid;grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));gap:10px;margin-bottom:16px}
+.stat{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center}
+.stat-n{font-size:24px;font-weight:700}.stat-l{font-size:11px;color:var(--ink3)}
+.pc{background:#fff;border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden}
+.pc-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;cursor:pointer}
+.pc-name{font-weight:700}.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:12px}
+.t-red{background:var(--rlight);color:var(--red)}
+.t-green{background:var(--glight);color:var(--green)}
+.t-blue{background:var(--blight);color:var(--blue)}
+.t-accent{background:var(--alight);color:var(--accent)}
+.score-ring{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;border:3px solid}
+.sr-h{color:var(--red);border-color:var(--red);background:var(--rlight)}
+.sr-m{color:var(--orange);border-color:var(--orange);background:var(--olight)}
+.sr-l{color:var(--blue);border-color:var(--blue);background:var(--blight)}
+.pc-detail{display:none;padding:20px;border-top:1px solid var(--border)}
+.pc-detail.open{display:block}
+.verif-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.vlink{padding:6px 12px;border-radius:6px;font-size:12px;text-decoration:none;font-weight:600;color:#fff}
+.vl-g{background:#1a73e8}.vl-an{background:#111}.vl-site{background:var(--accent)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:100}
+.overlay.open{display:flex}
+.modal{background:#fff;padding:25px;border-radius:12px;width:90%;max-width:500px}
+.email-pre{background:#f4f4f4;padding:15px;border-radius:8px;font-size:12px;white-space:pre-wrap;margin:15px 0}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 20px;border-radius:20px;opacity:0;transition:0.3s}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="hdr">
+    <div class="logo">
+      <div class="logo-sq">PX</div>
+      <div class="logo-name">Prospect<b>X</b> Pro</div>
+    </div>
+    <div class="badge-hdr">IA & Data Officielles</div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">🎯 Recherche Intelligente</div>
+    <div class="row2">
+      <div class="field">
+        <label>Secteur / Métier</label>
+        <input type="text" id="inpQ" placeholder="Ex: Plombier, Boulangerie...">
+      </div>
+      <div class="field">
+        <label>Localisation (Ville ou CP)</label>
+        <input type="text" id="inpVille" placeholder="Ex: Lyon, 75001...">
+      </div>
+    </div>
+    <div class="row3">
+      <div class="field">
+        <label>Nombre de prospects</label>
+        <select id="selNb">
+          <option value="5">5 entreprises</option>
+          <option value="10" selected>10 entreprises</option>
+          <option value="25">25 entreprises</option>
+        </select>
+      </div>
+      <div class="field" style="grid-column: span 2">
+        <label>Action</label>
+        <button class="btn btn-p" id="btnLancer" onclick="lancer()">Lancer l'analyse automatique</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card prog-card" id="progCard">
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+      <div id="progStatus" style="font-size:13px;font-weight:600">Initialisation...</div>
+      <div id="progPct" style="font-size:13px">0%</div>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+    <div class="logbox" id="logBox"></div>
+  </div>
+
+  <div class="stats" id="statsEl" style="display:none">
+    <div class="stat"><div class="stat-n" id="sTot" style="color:var(--accent)">0</div><div class="stat-l">Analysés</div></div>
+    <div class="stat"><div class="stat-n" id="sNoSite" style="color:var(--red)">0</div><div class="stat-l">Sans site / Lents</div></div>
+    <div class="stat"><div class="stat-n" id="sHot" style="color:var(--green)">0</div><div class="stat-l">Opportunités</div></div>
+  </div>
+
+  <div id="resBlock">
+    <div id="cardsList"></div>
+  </div>
+</div>
+
+<div class="overlay" id="emailOverlay">
+  <div class="modal">
+    <h2>Email de prospection</h2>
+    <div class="email-pre" id="emailContent"></div>
+    <button class="btn btn-p" onclick="copyEmail()">Copier le message</button>
+    <button class="btn btn-o" onclick="closeEmail()">Fermer</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// --- CONFIGURATION ---
+const APOLLO_KEY = "aEc0vY4GEa7hxi2hgCQWfQ";
+const GOOGLE_KEY = "AIzaSyBB2C9PSSv4w26h1MIxPBeFXnCFAuflLUg";
+const API_GOUV = 'https://recherche-entreprises.api.gouv.fr/search';
+
+let allProspects = [];
+
+// --- FONCTIONS API ---
+async function findSite(name) {
+  try {
+    const r = await fetch("https://api.apollo.io/v1/mixed_people/search", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ api_key: APOLLO_KEY, q_organization_name: name, page: 1 })
+    });
+    const d = await r.json();
+    return d.organizations?.[0]?.primary_domain || null;
+  } catch(e) { return null; }
+}
+
+async function getSpeed(url) {
+  if(!url) return null;
+  try {
+    const r = await fetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://${url}&key=${GOOGLE_KEY}&category=PERFORMANCE`);
+    const d = await r.json();
+    return Math.round(d.lighthouseResult.categories.performance.score * 100);
+  } catch(e) { return null; }
+}
+
+// --- LOGIQUE PRINCIPALE ---
+async function lancer() {
+  const q = document.getElementById('inpQ').value;
+  const v = document.getElementById('inpVille').value;
+  const nb = document.getElementById('selNb').value;
+
+  if(!q) return alert("Saisie un métier !");
+
+  allProspects = [];
+  document.getElementById('btnLancer').disabled = true;
+  document.getElementById('progCard').classList.add('on');
+  const log = document.getElementById('logBox');
+  log.innerHTML = "";
+
+  const addLog = (m) => { log.innerHTML += `<div>> ${m}</div>`; log.scrollTop = log.scrollHeight; };
+
+  addLog("Connexion aux serveurs d'Etat...");
+  try {
+    const res = await fetch(`${API_GOUV}?q=${q}&per_page=${nb}${v ? '&commune='+v : ''}&etat_administratif=A`);
+    const data = await res.json();
+    
+    for(let [i, r] of data.results.entries()) {
+      let pct = Math.round(((i+1)/data.results.length)*100);
+      document.getElementById('progFill').style.width = pct+'%';
+      document.getElementById('progPct').textContent = pct+'%';
+      document.getElementById('progStatus').textContent = `Analyse : ${r.nom_complet}`;
+
+      addLog(`Analyse web pour ${r.nom_complet}...`);
+      const site = await findSite(r.nom_complet);
+      const speed = await getSpeed(site);
+
+      // Calcul du score de priorité
+      let score = 30;
+      if(!site) score += 50; 
+      else if(speed < 50) score += 30;
+
+      allProspects.push({
+        id: i,
+        nom: r.nom_complet,
+        ville: r.siege.libelle_commune,
+        site: site,
+        speed: speed,
+        score: score,
+        siren: r.siren
+      });
+    }
+
+    allProspects.sort((a,b) => b.score - a.score);
+    render();
+    addLog("Analyse terminée avec succès !");
+  } catch(e) { addLog("Erreur de connexion."); }
+
+  document.getElementById('btnLancer').disabled = false;
+}
+
+function render() {
+  const list = document.getElementById('cardsList');
+  list.innerHTML = "";
+  document.getElementById('statsEl').style.display = "grid";
+  document.getElementById('sTot').textContent = allProspects.length;
+  document.getElementById('sNoSite').textContent = allProspects.filter(p => !p.site || p.speed < 50).length;
+
+  allProspects.forEach(p => {
+    const ringCls = p.score > 60 ? 'sr-h' : (p.score > 40 ? 'sr-m' : 'sr-l');
+    list.innerHTML += `
+      <div class="pc">
+        <div class="pc-head" onclick="toggle(${p.id})">
+          <div>
+            <div class="pc-name">${p.nom}</div>
+            <div class="tags">
+              <span class="tag ${p.site ? 't-green':'t-red'}">${p.site ? '🌐 '+p.site : '🚫 Pas de site'}</span>
+              ${p.speed ? `<span class="tag t-blue">⚡ Score : ${p.speed}%</span>`:''}
+              <span class="tag t-accent">📍 ${p.ville}</span>
+            </div>
+          </div>
+          <div class="score-ring ${ringCls}">${p.score}</div>
+        </div>
+        <div class="pc-detail" id="det-${p.id}">
+          <p><b>Diagnostic :</b> ${!p.site ? "Entreprise sans présence web détectée." : (p.speed < 50 ? "Site web existant mais trop lent (mauvais SEO)." : "Présence web correcte.")}</p>
+          <div class="verif-links">
+            <a href="https://www.google.com/search?q=${p.nom}" target="_blank" class="vlink vl-g">Google</a>
+            <a href="https://annuaire-entreprises.data.gouv.fr/entreprise/${p.siren}" target="_blank" class="vlink vl-an">Fiche INSEE</a>
+            <button class="vlink vl-site" onclick="openEmail(${p.id})">✉️ Email Type</button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function toggle(id) { document.getElementById(`det-${id}`).classList.toggle('open'); }
+
+function openEmail(id) {
+  const p = allProspects.find(x => x.id === id);
+  const text = `Bonjour ${p.nom},\n\nJ'ai analysé votre présence en ligne à ${p.ville}.\n${!p.site ? "Il semble que vous n'ayez pas encore de site web." : "Votre site actuel manque de rapidité."}\n\nSouhaitez-vous en discuter ?`;
+  document.getElementById('emailContent').textContent = text;
+  document.getElementById('emailOverlay').classList.add('open');
+}
+
+function closeEmail() { document.getElementById('emailOverlay').classList.remove('open'); }
+function copyEmail() { 
+  navigator.clipboard.writeText(document.getElementById('emailContent').textContent);
+  const t = document.getElementById('toast'); t.textContent = "Copié !"; t.classList.add('on');
+  setTimeout(() => t.classList.remove('on'), 2000);
+}
+</script>
+</body>
+</html>
